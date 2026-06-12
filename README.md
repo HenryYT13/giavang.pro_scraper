@@ -30,8 +30,8 @@ The toolkit consists of 5 modular scripts, each targeting a specific endpoint pr
    * `p4`: Recovered from a `<template>` block matching `^perf-`
    * `p5`: Extracted from a specific structural utility CSS class budget tag
 2. **Key Derivation:** The extracted tokens undergo hexadecimal conversion into byte arrays. The algorithm replicates the client-side string obfuscation function via sequential bitwise XOR operations:
-   $$\text{Secret Key} = \text{hex\_to\_bytes}(p0 + p1) \oplus \text{hex\_to\_bytes}(p2 + p3)$$
-   $$\text{Secret IV} = \text{hex\_to\_bytes}(p4) \oplus \text{hex\_to\_bytes}(p5)$$
+  Secret Key = hex_to_bytes(p0 + p1) XOR hex_to_bytes(p2 + p3)
+  Secret IV  = hex_to_bytes(p4) XOR hex_to_bytes(p5)
 3. **Payload Decryption:** The server yields a Base64 encoded payload. The toolkit feeds the derived parameters into an **AES-CBC** cipher instance, utilizing **PKCS7** unpadding to print the cleartext data stream.
 
 ---
