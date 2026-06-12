@@ -34,6 +34,7 @@ The toolkit consists of 5 modular scripts, each targeting a specific endpoint pr
 3. **Key Derivation:** The extracted tokens undergo hexadecimal conversion into byte arrays. The algorithm replicates the client-side string obfuscation function via sequential bitwise XOR operations:
 
   Secret Key = hex_to_bytes(p0 + p1) XOR hex_to_bytes(p2 + p3)
+  
   Secret IV  = hex_to_bytes(p4) XOR hex_to_bytes(p5)
 
 3. **Payload Decryption:** The server yields a Base64 encoded payload. The toolkit feeds the derived parameters into an **AES-CBC** cipher instance, utilizing **PKCS7** unpadding to print the cleartext data stream.
