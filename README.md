@@ -23,15 +23,19 @@ The toolkit consists of 5 modular scripts, each targeting a specific endpoint pr
 ## 🏗️ Architecture: How the Decryption Works
 
 1. **Token Extraction:** The script issues a handshake request to the landing page to scrape 6 scattered properties using `BeautifulSoup`:
+
    * `p0`: Sourced from `<meta name="x-locale-seg">`
    * `p1`: Extracted from the font metric link (`data-woff` / `data-hint`)
    * `p2`: Sourced from `<meta name="x-sw-scope">`
    * `p3`: Pulled from an obfuscated `div` matching the regex pattern `^ab-`
    * `p4`: Recovered from a `<template>` block matching `^perf-`
    * `p5`: Extracted from a specific structural utility CSS class budget tag
-2. **Key Derivation:** The extracted tokens undergo hexadecimal conversion into byte arrays. The algorithm replicates the client-side string obfuscation function via sequential bitwise XOR operations:
+
+3. **Key Derivation:** The extracted tokens undergo hexadecimal conversion into byte arrays. The algorithm replicates the client-side string obfuscation function via sequential bitwise XOR operations:
+
   Secret Key = hex_to_bytes(p0 + p1) XOR hex_to_bytes(p2 + p3)
   Secret IV  = hex_to_bytes(p4) XOR hex_to_bytes(p5)
+
 3. **Payload Decryption:** The server yields a Base64 encoded payload. The toolkit feeds the derived parameters into an **AES-CBC** cipher instance, utilizing **PKCS7** unpadding to print the cleartext data stream.
 
 ---
@@ -40,8 +44,6 @@ The toolkit consists of 5 modular scripts, each targeting a specific endpoint pr
 
 ### Prerequisites
 
-Ensure you are using Python 3.8 or higher. Install the required dependencies using your system's package manager or `pip`. 
-
-For **Fedora** systems:
+Ensure you are using Python 3.8 or higher. Install the required dependencies using `pip`. 
 ```bash
-sudo dnf install python3-pip python3-pycryptodome python3-beautifulsoup4 python3-requests
+pip install pycryptodome beautifulsoup4 requests
